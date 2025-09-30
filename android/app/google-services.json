@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "193810607583",
+    "project_id": "kamigeoloc",
+    "storage_bucket": "kamigeoloc.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:193810607583:android:90dc7dcc8d33d23a09a86a",
+        "android_client_info": {
+          "package_name": "com.kami.kami_geoloc"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD_NofCCtLwcrOWpC0c-EMezhwagT7yg9M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
