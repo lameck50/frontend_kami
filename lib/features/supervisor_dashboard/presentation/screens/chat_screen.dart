@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:kami_geoloc/core/constants/api_constants.dart';
+import 'package:kami_geoloc/features/auth/presentation/providers/auth_provider.dart';
 import 'package:kami_geoloc/features/supervisor_dashboard/domain/entities/message.dart';
 import 'package:kami_geoloc/features/supervisor_dashboard/presentation/providers/supervisor_provider.dart';
 import 'package:provider/provider.dart';
@@ -22,13 +24,14 @@ class _ChatScreenState extends State<ChatScreen> {
   void initState() {
     super.initState();
     final supervisorProvider = Provider.of<SupervisorProvider>(context, listen: false);
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
     supervisorProvider.fetchMessages(widget.agentId);
 
-socket = IO.io(API_BASE_URL,
-        IO.option()
-            .setTransports(['websocket'])
-            .setQuery({'userId': authProvider.user!.id})
-            .build());
+    socket = IO.io(API_BASE_URL, <String, dynamic>{
+      'transports': ['websocket'],
+      'autoConnect': false,
+      'query': {'userId': authProvider.user!['id']}
+    });
 
     socket.connect();
     socket.onConnect((_) {

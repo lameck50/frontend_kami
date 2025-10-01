@@ -12,6 +12,7 @@ import 'package:kami_geoloc/features/supervisor_dashboard/presentation/screens/m
 import 'package:kami_geoloc/features/supervisor_dashboard/presentation/screens/geofencing_screen.dart';
 import 'package:kami_geoloc/features/supervisor_dashboard/presentation/screens/leaderboard_screen.dart';
 import '../../../auth/presentation/screens/login_screen.dart';
+import 'package:kami_geoloc/core/constants/api_constants.dart';
 
 class SupervisorHomeScreen extends StatefulWidget {
   const SupervisorHomeScreen({super.key});
@@ -51,11 +52,10 @@ class _SupervisorHomeScreenState extends State<SupervisorHomeScreen> {
     // IMPORTANT: Utilisez l'adresse IP de votre machine si vous testez sur un appareil physique.
     // Sur l'émulateur Android, '10.0.2.2' fait référence au localhost de la machine hôte.
     // Sur un appareil réel, remplacez par l'IP locale de votre serveur (ex: '192.168.1.10').
-    socket = IO.io(API_BASE_URL,
-    IO.option()
-        .setTransports(['websocket']) // for Flutter web
-        .disableAutoConnect() // disable auto-connection
-        .build());
+    socket = IO.io(API_BASE_URL, <String, dynamic>{
+      'transports': ['websocket'],
+      'autoConnect': false,
+    });
 
     socket.connect();
 
