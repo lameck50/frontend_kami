@@ -12,11 +12,30 @@ class SplashScreen extends StatefulWidget {
   State<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> {
+class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _fadeAnimation;
+  late Animation<double> _scaleAnimation;
+
   @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(seconds: 2), _navigate);
+    _controller = AnimationController(
+      duration: const Duration(seconds: 2),
+      vsync: this,
+    )..forward();
+
+    _fadeAnimation = CurvedAnimation(
+      parent: _controller,
+      curve: Curves.easeIn,
+    );
+
+    _scaleAnimation = CurvedAnimation(
+      parent: _controller,
+      curve: Curves.elasticOut,
+    );
+
+    Future.delayed(const Duration(seconds: 3), _navigate);
   }
 
   void _navigate() {
@@ -39,10 +58,25 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       body: Center(
-        child: Text("KamiGeoloc", style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
+        child: ScaleTransition(
+          scale: _scaleAnimation,
+          child: FadeTransition(
+            opacity: _fadeAnimation,
+            child: const Text(
+              "KamiGeoloc",
+              style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+            ),
+          ),
+        ),
       ),
     );
   }
